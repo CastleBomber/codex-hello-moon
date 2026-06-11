@@ -1,0 +1,462 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 230 30% 3%;
+  --foreground: 0 0% 100%;
+  --border: 0 0% 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #05060a;
+  color: white;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scene {
+  --scene-top: #111a31;
+  --scene-bottom: #020309;
+  --moon-a: #fff9dc;
+  --moon-b: #b7c3d2;
+  --moon-glow: rgba(214, 229, 255, 0.34);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(61, 76, 119, 0.16), transparent 35%),
+    linear-gradient(180deg, var(--scene-top), var(--scene-bottom));
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+}
+
+.stars i {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.65);
+  opacity: 0.36;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+.ambient {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.13;
+  animation: ambient-drift 15s ease-in-out infinite alternate;
+}
+
+.ambient--one {
+  top: 8%;
+  left: 10%;
+  width: 35vw;
+  height: 35vw;
+  background: #5889ff;
+}
+
+.ambient--two {
+  right: 3%;
+  bottom: 6%;
+  width: 28vw;
+  height: 28vw;
+  background: #8062c7;
+  animation-direction: alternate-reverse;
+}
+
+.moon-wrap {
+  position: relative;
+  z-index: 2;
+  width: clamp(13rem, 31vw, 28rem);
+  aspect-ratio: 1;
+  animation: moon-float 8s ease-in-out infinite;
+}
+
+.moon {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 31% 28%, rgba(255, 255, 255, 0.9), transparent 2%),
+    radial-gradient(circle at 65% 33%, rgba(72, 80, 89, 0.18), transparent 12%),
+    radial-gradient(circle at 38% 72%, rgba(52, 61, 72, 0.2), transparent 13%),
+    radial-gradient(circle at 50% 50%, var(--moon-a), var(--moon-b));
+  box-shadow:
+    inset -2.3rem -1.3rem 3rem rgba(21, 28, 40, 0.25),
+    0 0 3rem var(--moon-glow),
+    0 0 8rem color-mix(in srgb, var(--moon-glow), transparent 40%);
+}
+
+.craters i {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(71, 78, 88, 0.12);
+  box-shadow:
+    inset 0.25rem 0.2rem 0.35rem rgba(40, 46, 54, 0.15),
+    0.1rem 0.1rem 0.15rem rgba(255, 255, 255, 0.18);
+}
+
+.craters i:nth-child(1) { left: 18%; top: 22%; width: 16%; height: 16%; }
+.craters i:nth-child(2) { right: 19%; top: 18%; width: 8%; height: 8%; }
+.craters i:nth-child(3) { right: 13%; bottom: 28%; width: 21%; height: 21%; }
+.craters i:nth-child(4) { left: 33%; bottom: 15%; width: 11%; height: 11%; }
+.craters i:nth-child(5) { left: 43%; top: 43%; width: 7%; height: 7%; }
+
+.moon-shadow {
+  position: absolute;
+  inset: -1%;
+  border-radius: 50%;
+  background: #070a11;
+  opacity: 0;
+}
+
+.horizon {
+  position: absolute;
+  z-index: 3;
+  right: -10%;
+  bottom: -17vh;
+  left: -10%;
+  height: 25vh;
+  border-radius: 50% 50% 0 0;
+  background: #020306;
+  box-shadow: 0 -2rem 7rem rgba(28, 45, 76, 0.18);
+}
+
+.home-grid {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  background: #05060a;
+}
+
+.home-grid::before,
+.home-grid::after {
+  position: absolute;
+  z-index: 10;
+  content: "";
+  pointer-events: none;
+  background: rgba(221, 235, 255, 0.5);
+  box-shadow:
+    0 0 0.4rem rgba(206, 228, 255, 0.5),
+    0 0 1.5rem rgba(127, 175, 255, 0.28);
+}
+
+.home-grid::before {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+}
+
+.home-grid::after {
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 1px;
+}
+
+.quadrant-link {
+  position: relative;
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.quadrant-link:focus-visible {
+  position: relative;
+  z-index: 20;
+  outline: 2px solid white;
+  outline-offset: -4px;
+}
+
+.scene--preview {
+  min-height: 100%;
+}
+
+.scene--preview .moon-wrap {
+  width: min(29vw, 29vh);
+}
+
+.moon-label {
+  position: absolute;
+  z-index: 5;
+  top: calc(50% + min(14.5vw, 14.5vh) + 2.75rem);
+  left: 50%;
+  width: max-content;
+  max-width: 90%;
+  transform: translate(-50%, 0.75rem);
+  color: rgba(239, 245, 255, 0);
+  font-family: Georgia, "Times New Roman", ui-serif, serif;
+  font-size: clamp(0.68rem, 1.15vw, 0.92rem);
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0 1rem rgba(198, 220, 255, 0);
+  opacity: 0;
+  transition:
+    color 350ms ease,
+    opacity 350ms ease,
+    text-shadow 350ms ease,
+    transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.scene--lunar-eclipse .moon-label {
+  color: rgba(255, 215, 198, 0);
+}
+
+.scene--preview .moon-wrap:hover + .moon-label,
+.quadrant-link:focus-visible .moon-label {
+  transform: translate(-50%, 0);
+  color: rgba(239, 245, 255, 0.92);
+  text-shadow:
+    0 0 0.7rem rgba(214, 229, 255, 0.5),
+    0 0 1.8rem rgba(122, 166, 229, 0.28);
+  opacity: 1;
+}
+
+.quadrant-link:focus-visible .scene--lunar-eclipse .moon-label,
+.scene--lunar-eclipse .moon-wrap:hover + .moon-label {
+  color: rgba(255, 215, 198, 0.94);
+  text-shadow:
+    0 0 0.7rem rgba(255, 166, 123, 0.5),
+    0 0 1.8rem rgba(204, 71, 38, 0.3);
+}
+
+.scene--preview .solar-rays {
+  width: min(40vw, 40vh);
+}
+
+.scene--preview .ambient {
+  filter: blur(55px);
+}
+
+.scene--preview .horizon {
+  bottom: -9vh;
+  height: 13vh;
+}
+
+.scene--lunar-eclipse {
+  --scene-top: #1b080c;
+  --scene-bottom: #030204;
+  --moon-a: #e06a39;
+  --moon-b: #681b19;
+  --moon-glow: rgba(222, 63, 30, 0.4);
+}
+
+.scene--lunar-eclipse .ambient--one {
+  background: #c72f1a;
+}
+
+.scene--lunar-eclipse .moon {
+  box-shadow:
+    inset -2.5rem -1.5rem 3.5rem rgba(36, 2, 4, 0.58),
+    0 0 3rem var(--moon-glow),
+    0 0 9rem rgba(165, 32, 16, 0.25);
+}
+
+.scene--lunar-eclipse .moon-shadow {
+  background: radial-gradient(circle at 70% 50%, #26080a 0%, #080306 70%);
+  opacity: 0.9;
+  animation: lunar-eclipse 12s ease-in-out infinite alternate;
+}
+
+.scene--solar-eclipse {
+  --scene-top: #21170d;
+  --scene-bottom: #020203;
+}
+
+.scene--solar-eclipse .moon-wrap {
+  width: clamp(12rem, 29vw, 26rem);
+}
+
+.scene--solar-eclipse .moon {
+  background: radial-gradient(circle at 38% 35%, #15161a, #010102 72%);
+  box-shadow:
+    0 0 0 0.35rem rgba(255, 248, 221, 0.95),
+    0 0 1.5rem 0.5rem rgba(255, 217, 133, 0.9),
+    0 0 6rem 2rem rgba(255, 143, 52, 0.4),
+    0 0 13rem 5rem rgba(255, 119, 32, 0.16);
+  animation: corona-breathe 5s ease-in-out infinite;
+}
+
+.scene--solar-eclipse .craters {
+  display: none;
+}
+
+.solar-rays {
+  position: absolute;
+  z-index: 1;
+  width: clamp(18rem, 41vw, 37rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 220, 150, 0.28) 0deg,
+    transparent 2deg,
+    transparent 12deg
+  );
+  filter: blur(5px);
+  animation: rays-spin 70s linear infinite;
+  mask-image: radial-gradient(circle, transparent 0 33%, black 48%, transparent 72%);
+}
+
+.scene--new-moon {
+  --scene-top: #070b16;
+  --scene-bottom: #010207;
+}
+
+.scene--new-moon .moon {
+  background: radial-gradient(circle at 38% 34%, #151a25, #03050a 70%);
+  box-shadow:
+    inset 0 0 3rem rgba(80, 101, 138, 0.1),
+    0 0 0.6rem rgba(105, 137, 184, 0.1);
+}
+
+.scene--new-moon .craters {
+  opacity: 0.3;
+}
+
+.scene--new-moon .moon-wrap {
+  animation: new-moon-drift 15s ease-in-out infinite alternate;
+}
+
+.scene--full-moon {
+  --scene-top: #151d31;
+  --scene-bottom: #03050a;
+  --moon-a: #fffde9;
+  --moon-b: #b7c3d4;
+  --moon-glow: rgba(226, 239, 255, 0.46);
+}
+
+.scene--full-moon .moon {
+  animation: full-moon-glow 6s ease-in-out infinite;
+}
+
+.menu-link {
+  opacity: 0;
+  transform: translateX(1rem);
+  animation: menu-enter 0.4s ease-out forwards;
+  animation-delay: calc(var(--link-index) * 45ms + 80ms);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.18; transform: scale(0.8); }
+  50% { opacity: 0.85; transform: scale(1.35); }
+}
+
+@keyframes ambient-drift {
+  to { transform: translate(10vw, 5vh) scale(1.15); }
+}
+
+@keyframes moon-float {
+  0%, 100% { transform: translateY(-0.6rem) rotate(-0.4deg); }
+  50% { transform: translateY(0.8rem) rotate(0.5deg); }
+}
+
+@keyframes lunar-eclipse {
+  0%, 8% { transform: translateX(-108%); }
+  44%, 62% { transform: translateX(5%); }
+  92%, 100% { transform: translateX(108%); }
+}
+
+@keyframes corona-breathe {
+  50% {
+    box-shadow:
+      0 0 0 0.28rem rgba(255, 251, 235, 1),
+      0 0 2rem 0.7rem rgba(255, 217, 133, 0.95),
+      0 0 7rem 2.6rem rgba(255, 143, 52, 0.5),
+      0 0 15rem 6rem rgba(255, 119, 32, 0.19);
+  }
+}
+
+@keyframes rays-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes new-moon-drift {
+  from { transform: translate(-2vw, 1vh); }
+  to { transform: translate(2vw, -1vh); }
+}
+
+@keyframes full-moon-glow {
+  50% { filter: brightness(1.08); transform: scale(1.015); }
+}
+
+@keyframes menu-enter {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 640px) {
+  .moon-wrap {
+    width: min(68vw, 19rem);
+  }
+
+  .horizon {
+    bottom: -12vh;
+    height: 19vh;
+  }
+
+  .scene--preview .moon-wrap {
+    width: min(34vw, 22vh);
+  }
+
+  .moon-label {
+    top: calc(50% + min(17vw, 11vh) + 2rem);
+    font-size: clamp(0.58rem, 2.3vw, 0.72rem);
+    letter-spacing: 0.18em;
+  }
+
+  .scene--preview .solar-rays {
+    width: min(46vw, 29vh);
+  }
+
+  .scene--preview .horizon {
+    bottom: -7vh;
+    height: 10vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .scene--lunar-eclipse .moon-shadow {
+    transform: translateX(4%);
+  }
+}
