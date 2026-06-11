@@ -299,6 +299,10 @@ a {
   width: clamp(12rem, 29vw, 26rem);
 }
 
+.scene--preview.scene--solar-eclipse .moon-wrap {
+  width: min(29vw, 29vh);
+}
+
 .scene--solar-eclipse .moon {
   background: radial-gradient(circle at 38% 35%, #15161a, #010102 72%);
   box-shadow:
