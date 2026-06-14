@@ -71,7 +71,9 @@ export function MoonScene({
         </div>
       </div>
 
-      {preview && <span className="moon-label">{sceneLabels[kind]}</span>}
+      <span className={cn("moon-label", !preview && "moon-label--full")}>
+        {sceneLabels[kind]}
+      </span>
 
       <div className="horizon" aria-hidden="true" />
     </SceneElement>

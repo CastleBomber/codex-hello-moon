@@ -36,7 +36,7 @@ const SheetContent = React.forwardRef<
     <SheetPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-y-0 right-0 z-50 flex w-[min(88vw,25rem)] flex-col border-l border-white/10 bg-[#08090d]/95 px-8 py-10 text-white shadow-2xl backdrop-blur-2xl transition duration-500 ease-out data-[state=closed]:translate-x-full data-[state=open]:translate-x-0 motion-reduce:transition-none",
+        "fixed inset-y-0 right-0 z-50 flex w-[min(90vw,27rem)] flex-col overflow-hidden border-l border-white/10 bg-[#08090d]/95 px-8 py-10 text-white shadow-2xl backdrop-blur-2xl transition duration-500 ease-out data-[state=closed]:translate-x-full data-[state=open]:translate-x-0 motion-reduce:transition-none",
         className,
       )}
       {...props}

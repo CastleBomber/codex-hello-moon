@@ -36,10 +36,34 @@ export function Navbar() {
             <Menu aria-hidden="true" className="size-6" />
           </Button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className="cosmic-sheet">
           <SheetTitle>Navigation</SheetTitle>
-          <nav aria-label="Main navigation" className="my-auto">
-            <ul className="space-y-1">
+          <div className="cosmic-sheet__stars" aria-hidden="true">
+            {Array.from({ length: 18 }, (_, index) => (
+              <i
+                key={index}
+                style={
+                  {
+                    "--star-x": `${(index * 43 + 7) % 100}%`,
+                    "--star-y": `${(index * 29 + 11) % 100}%`,
+                    "--star-delay": `${-((index * 0.37) % 4)}s`,
+                  } as React.CSSProperties
+                }
+              />
+            ))}
+          </div>
+          <div className="cosmic-sheet__orbit" aria-hidden="true">
+            <span />
+          </div>
+          <div className="cosmic-sheet__header" aria-hidden="true">
+            <div className="cosmic-sheet__moon" />
+            <div className="cosmic-sheet__line" />
+          </div>
+          <nav
+            aria-label="Main navigation"
+            className="relative z-10 my-auto"
+          >
+            <ul className="space-y-2">
               {links.map((link, index) => {
                 const active = pathname === link.href;
                 return (
@@ -53,11 +77,12 @@ export function Navbar() {
                         href={link.href}
                         aria-current={active ? "page" : undefined}
                         className={cn(
-                          "flex items-center rounded-xl px-4 py-3 text-lg tracking-[0.08em] text-white/50 transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
-                          active && "bg-white/[0.08] text-white",
+                          "cosmic-nav-link flex items-center justify-between rounded-2xl px-5 py-4 text-base tracking-[0.12em] text-white/55 transition duration-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                          active && "cosmic-nav-link--active text-white",
                         )}
                       >
-                        {link.label}
+                        <span>{link.label}</span>
+                        <span className="cosmic-nav-link__arc" aria-hidden="true" />
                       </Link>
                     </SheetClose>
                   </li>
