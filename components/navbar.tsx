@@ -15,11 +15,11 @@ import {
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/lunar-eclipse", label: "Lunar Eclipse" },
-  { href: "/solar-eclipse", label: "Solar Eclipse" },
-  { href: "/new-moon", label: "New Moon" },
-  { href: "/full-moon", label: "Full Moon" },
+  { href: "/", label: "Home", moon: "home" },
+  { href: "/lunar-eclipse", label: "Lunar Eclipse", moon: "lunar" },
+  { href: "/solar-eclipse", label: "Solar Eclipse", moon: "solar" },
+  { href: "/new-moon", label: "New Moon", moon: "new" },
+  { href: "/full-moon", label: "Full Moon", moon: "full" },
 ];
 
 export function Navbar() {
@@ -82,7 +82,15 @@ export function Navbar() {
                         )}
                       >
                         <span>{link.label}</span>
-                        <span className="cosmic-nav-link__arc" aria-hidden="true" />
+                        <span
+                          className={cn(
+                            "mini-moon",
+                            `mini-moon--${link.moon}`,
+                          )}
+                          aria-hidden="true"
+                        >
+                          <span className="mini-moon__body" />
+                        </span>
                       </Link>
                     </SheetClose>
                   </li>

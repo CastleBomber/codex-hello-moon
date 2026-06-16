@@ -538,19 +538,127 @@ a {
     0 0 1.5rem rgba(71, 112, 180, 0.08);
 }
 
-.cosmic-nav-link__arc {
+.mini-moon {
   position: relative;
   z-index: 1;
-  width: 0.8rem;
-  height: 0.8rem;
-  border: 1px solid rgba(225, 236, 255, 0.3);
-  border-left-color: transparent;
+  display: grid;
+  width: 1.85rem;
+  aspect-ratio: 1;
+  place-items: center;
   border-radius: 50%;
-  transform: rotate(-28deg);
+  opacity: 0.7;
   transition:
-    border-color 300ms ease,
-    filter 300ms ease,
-    transform 300ms ease;
+    opacity 300ms ease,
+    transform 300ms ease,
+    filter 300ms ease;
+}
+
+.mini-moon__body {
+  position: relative;
+  width: 1.18rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff9de, #9da9bb 72%);
+  box-shadow:
+    inset -0.2rem -0.1rem 0.35rem rgba(6, 11, 22, 0.34),
+    0 0 0.6rem rgba(213, 230, 255, 0.3);
+}
+
+.mini-moon__body::before,
+.mini-moon__body::after {
+  position: absolute;
+  content: "";
+  border-radius: inherit;
+}
+
+.mini-moon--home .mini-moon__body::before {
+  inset: -0.05rem;
+  background: #070a12;
+  transform: translateX(36%);
+}
+
+.mini-moon--lunar .mini-moon__body {
+  background: radial-gradient(circle at 34% 31%, #ef7c46, #6f201a 76%);
+  box-shadow:
+    inset -0.25rem -0.12rem 0.4rem rgba(36, 2, 4, 0.58),
+    0 0 0.75rem rgba(222, 63, 30, 0.42);
+}
+
+.mini-moon--lunar .mini-moon__body::before {
+  inset: -0.06rem;
+  background: radial-gradient(circle at 68% 50%, #26080a 0%, #070306 72%);
+  opacity: 0.92;
+  animation: mini-lunar-eclipse 3.8s ease-in-out infinite alternate;
+}
+
+.mini-moon--solar {
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 224, 160, 0.28) 0deg,
+    transparent 8deg,
+    transparent 20deg
+  );
+  box-shadow: 0 0 0.9rem rgba(255, 174, 72, 0.12);
+  animation: rays-spin 24s linear infinite;
+}
+
+.mini-moon--solar .mini-moon__body {
+  width: 1.08rem;
+  background: radial-gradient(circle at 40% 35%, #17191e, #010102 75%);
+  box-shadow:
+    0 0 0 0.13rem rgba(255, 248, 221, 0.9),
+    0 0 0.45rem rgba(255, 205, 124, 0.72),
+    0 0 0.85rem rgba(255, 143, 52, 0.26);
+  animation: mini-corona 2.8s ease-in-out infinite;
+}
+
+.mini-moon--new .mini-moon__body {
+  background: radial-gradient(circle at 37% 34%, #151a25, #02040a 72%);
+  box-shadow:
+    inset 0 0 0.55rem rgba(88, 112, 155, 0.12),
+    0 0 0.35rem rgba(105, 137, 184, 0.12);
+}
+
+.mini-moon--new .mini-moon__body::before,
+.mini-moon--full .mini-moon__body::before {
+  width: 0.18rem;
+  height: 0.18rem;
+  top: 33%;
+  left: 30%;
+  background: rgba(86, 98, 118, 0.18);
+  box-shadow:
+    0.35rem 0.08rem 0 rgba(86, 98, 118, 0.1),
+    0.25rem 0.42rem 0 0.08rem rgba(86, 98, 118, 0.1);
+}
+
+.mini-moon--full .mini-moon__body {
+  background: radial-gradient(circle at 37% 34%, #fffde9, #aebbd0 74%);
+  box-shadow:
+    inset -0.12rem -0.05rem 0.3rem rgba(35, 47, 66, 0.18),
+    0 0 0.85rem rgba(226, 239, 255, 0.5);
+  animation: mini-full-glow 2.8s ease-in-out infinite;
+}
+
+.mini-moon--full .mini-moon__body::before {
+  background: rgba(86, 98, 118, 0.14);
+}
+
+.cosmic-nav-link:hover .mini-moon,
+.cosmic-nav-link--active .mini-moon {
+  opacity: 1;
+  filter: drop-shadow(0 0 0.5rem rgba(197, 221, 255, 0.45));
+  transform: scale(1.08);
+}
+
+.cosmic-nav-link:hover .mini-moon--lunar,
+.cosmic-nav-link--active .mini-moon--lunar {
+  filter: drop-shadow(0 0 0.55rem rgba(255, 119, 64, 0.42));
+}
+
+.cosmic-nav-link:hover .mini-moon--solar,
+.cosmic-nav-link--active .mini-moon--solar {
+  filter: drop-shadow(0 0 0.7rem rgba(255, 192, 100, 0.5));
 }
 
 .cosmic-nav-link > span:first-child {
@@ -558,12 +666,41 @@ a {
   z-index: 1;
 }
 
-.cosmic-nav-link:hover .cosmic-nav-link__arc,
-.cosmic-nav-link--active .cosmic-nav-link__arc {
-  border-color: rgba(235, 244, 255, 0.9);
-  border-left-color: transparent;
-  filter: drop-shadow(0 0 0.35rem rgba(197, 221, 255, 0.75));
-  transform: rotate(22deg);
+@keyframes mini-lunar-eclipse {
+  from { transform: translateX(-34%); }
+  to { transform: translateX(34%); }
+}
+
+@keyframes mini-corona {
+  50% {
+    box-shadow:
+      0 0 0 0.1rem rgba(255, 251, 235, 1),
+      0 0 0.6rem rgba(255, 205, 124, 0.8),
+      0 0 1rem rgba(255, 143, 52, 0.34);
+  }
+}
+
+@keyframes mini-full-glow {
+  50% {
+    filter: brightness(1.08);
+    transform: scale(1.04);
+  }
+}
+
+@keyframes mini-new-drift {
+  to { transform: translateX(0.08rem); }
+}
+
+.mini-moon--new .mini-moon__body {
+  animation: mini-new-drift 3s ease-in-out infinite alternate;
+}
+
+@keyframes mini-home-phase {
+  50% { transform: translateX(26%); }
+}
+
+.mini-moon--home .mini-moon__body::before {
+  animation: mini-home-phase 3.2s ease-in-out infinite alternate;
 }
 
 @keyframes twinkle {
