@@ -15,7 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/", label: "Home", moon: "home" },
+  { href: "/", label: "*Home*", moon: "home" },
   { href: "/lunar-eclipse", label: "Lunar Eclipse", moon: "lunar" },
   { href: "/solar-eclipse", label: "Solar Eclipse", moon: "solar" },
   { href: "/new-moon", label: "New Moon", moon: "new" },
